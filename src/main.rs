@@ -5,7 +5,7 @@ use lazy_static::lazy_static;
 use regex::{Captures, Regex};
 
 lazy_static! {
-    static ref re_datetime: Regex = Regex::new(r"datetime\.datetime\((?P<year>\d+), (?P<month>\d+), (?P<day>\d+), (?P<hour>\d+), (?P<minute>\d+), (?P<second>\d+)(?:, (?P<microsecond>\d+))?, tzinfo=datetime\.timezone\.utc\)").unwrap();
+    static ref re_datetime: Regex = Regex::new(r"datetime\.datetime\((?P<year>\d+), (?P<month>\d+), (?P<day>\d+), (?P<hour>\d+), (?P<minute>\d+)(?:, (?P<second>\d+))?(?:, (?P<microsecond>\d+))?, tzinfo=datetime\.timezone\.utc\)").unwrap();
 }
 
 fn main() {
@@ -25,15 +25,20 @@ fn replace_datetime_in_line(haystack: &str) -> String {
 }
 
 fn format_datetime_utc(captures: &Captures) -> Option<String> {
+    let zero = "0";
     let year: i32 = captures.name("year").unwrap().as_str().parse().ok()?;
     let month: u32 = captures.name("month").unwrap().as_str().parse().ok()?;
     let day: u32 = captures.name("day").unwrap().as_str().parse().ok()?;
     let hour: u32 = captures.name("hour").unwrap().as_str().parse().ok()?;
     let minute: u32 = captures.name("minute").unwrap().as_str().parse().ok()?;
-    let second: u32 = captures.name("second").unwrap().as_str().parse().ok()?;
+    let second: u32 = captures
+        .name("second")
+        .map_or(zero.to_owned(), |m| m.as_str().to_owned())
+        .parse()
+        .unwrap();
     let microsecond: u32 = captures
         .name("microsecond")
-        .map_or("0".to_owned(), |m| m.as_str().to_owned())
+        .map_or(zero.to_owned(), |m| m.as_str().to_owned())
         .parse()
         .unwrap();
 
