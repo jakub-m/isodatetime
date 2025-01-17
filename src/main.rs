@@ -5,7 +5,7 @@ use lazy_static::lazy_static;
 use regex::{Captures, Regex};
 
 lazy_static! {
-    static ref re_datetime: Regex = Regex::new(r"datetime\.datetime\((?P<year>\d+), (?P<month>\d+), (?P<day>\d+), (?P<hour>\d+), (?P<minute>\d+)(?:, (?P<second>\d+))?(?:, (?P<microsecond>\d+))?, tzinfo=(?:datetime\.timezone\.utc|<UTC>)\)").unwrap();
+    static ref re_datetime: Regex = Regex::new(r"datetime\.datetime\((?P<year>\d+), (?P<month>\d+), (?P<day>\d+), (?P<hour>\d+), (?P<minute>\d+)(?:, (?P<second>\d+))?(?:, (?P<microsecond>\d+))?, tzinfo=(?:datetime\.timezone\.utc|<UTC>|TzInfo\(UTC\))\)").unwrap();
 }
 
 fn main() {
