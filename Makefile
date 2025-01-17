@@ -4,6 +4,6 @@ test: build
 build:
 	cargo build
 install: release
-	sudo cp target/release/isodatetime /usr/local/bin
+	sudo cp target/release/isodatetime /usr/local/bin/
 release:
 	cargo build --release
