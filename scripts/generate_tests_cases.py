@@ -21,5 +21,6 @@ def iter_deltas():
 
 def iter_datetime_str():
     yield 'datetime.datetime(2024, 8, 13, 16, 11, tzinfo=<UTC>)'
+    yield 'datetime.datetime(2025, 1, 16, 20, 58, 13, 530947, tzinfo=TzInfo(UTC)'
 
 main()
